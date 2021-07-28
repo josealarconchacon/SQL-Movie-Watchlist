@@ -1,3 +1,4 @@
+import datetime
 import database
 
 movie_menu = """\nSelect one of the following option:
@@ -15,9 +16,18 @@ print(welcome_message)
 
 database.create_tables()
 
-while (user_input := input(movie_menu) != "6"):
+# add movie func
+def prompt_add_movie():
+    title = input("Movie title: ")
+    release_date = input("Release date (dd-mm-YYYY): ")
+    parsed_date = datetime.datetime.strptime(release_date, "%d-%m-%Y")
+    time_stamp = parsed_date.timestamp()
+
+    database.add_movie(title, time_stamp)
+
+while (user_input := input(movie_menu)) != "6":
     if user_input == "1":
-        pass
+        prompt_add_movie()
     elif user_input == "2":
         pass
     elif user_input == "3":
