@@ -16,7 +16,7 @@ print(welcome_message)
 
 database.create_tables()
 
-# add movie func
+# add movie
 def prompt_add_movie():
     title = input("Movie title: ")
     release_date = input("Release date (dd-mm-YYYY): ")
@@ -25,16 +25,36 @@ def prompt_add_movie():
 
     database.add_movie(title, time_stamp)
 
+
+# print upcoming list of movies
+def print_movies_list(heading, movies):
+    print(f"|-------- {heading} Movies --------|")
+    for m in movies:
+        # parse the timestamp into a datetime object, then converted into a string
+        movie_date = datetime.datetime.fromtimestamp(m[1])
+        real_date = movie_date.strftime("%b %d %Y")
+        print(f"{m[0]} (on {real_date})")
+    print("------------------------------------\n")
+
+
+# mark a movie as watched 
+def prompt_watched_movie():
+    movie_title = input("Enter movie title you watched: ")
+    database.watch_movie(movie_title)
+
 while (user_input := input(movie_menu)) != "6":
     if user_input == "1":
         prompt_add_movie()
     elif user_input == "2":
-        pass
+        movies = database.get_movies(True)
+        print_movies_list("Upcoming", movies)
     elif user_input == "3":
-        pass
+        movies = database.get_movies()
+        print_movies_list("All", movies)
     elif user_input == "4":
-        pass
+        prompt_watched_movie()
     elif user_input == "5":
-        pass
+        movies = database.get_watched_movies()
+        print_movies_list("All", movies)
     else:
         print("You've entered an invalid input, please try again!")
