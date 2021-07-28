@@ -19,7 +19,7 @@ SELECT_WATCHED_MOVIES = "SELECT * FROM movies WHERE watched = 1;"
 # Update
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
 
-connection = sqlite3.connect("myData.db")
+connection = sqlite3.connect("myMovieData.db")
 
 def create_tables():
     with connection:
