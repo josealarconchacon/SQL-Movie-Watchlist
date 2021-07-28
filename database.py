@@ -4,18 +4,28 @@ import sqlite3
 from sqlite3.dbapi2 import Cursor
 
 # create table query
-CREATE_Movies_table = """CREATE TABLE IF NOT EXISTS movies (
+CREATE_MOVIES_TABLE = """CREATE TABLE IF NOT EXISTS movies (
     title TEXT,
-    release_timestamp REAL,
-    watched INTEGER
+    release_timestamp REAL
 );"""
 
+CREATE_WATCHLIST_TABLE = """CREATE TABLE IF NOT EXISTS watched (
+    watcher_name TEXT,
+    title TEXT
+);"""
+
+
 # insert movies
-INSERT_MOVIES = "INSERT INTO movies (title, release_timestamp, watched) VALUES (?,?,0);"
+INSERT_MOVIES = "INSERT INTO movies (title, release_timestamp) VALUES (?,?,0);"
+# delete
+DELETE_MOVIES = "DELETE FROM movies WHERE title = ?;"
+#select
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 # select the upcoming movies
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
-SELECT_WATCHED_MOVIES = "SELECT * FROM movies WHERE watched = 1;"
+SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE watcher_name = ?;"
+# insert 
+INSERT_WATCHED_MOVIES = "INSERT INTO watched (watcher_name, title) VALUES (?,?);"
 # Update
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
 
@@ -23,7 +33,7 @@ connection = sqlite3.connect("myMovieData.db")
 
 def create_tables():
     with connection:
-        connection.execute(CREATE_Movies_table)
+        connection.execute(CREATE_MOVIES_TABLE)
 
 def add_movie(title, release_timestamp):
     with connection:
