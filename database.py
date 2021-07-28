@@ -16,8 +16,10 @@ SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 # select the upcoming movies
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
 SELECT_WATCHED_MOVIES = "SELECT * FROM movies WHERE watched = 1;"
-# Update
+# update
 SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
+# delete
+DELETE_MOVIE = "DELETE FROM movies WHERE title = ?;"
 
 connection = sqlite3.connect("myData.db")
 
