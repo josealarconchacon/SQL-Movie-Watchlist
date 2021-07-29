@@ -24,6 +24,7 @@ CREATE_WATCHED_TABLE = """CREATE TABLE IF NOT EXISTS watched (
 
 
 INSERT_MOVIES = "INSERT INTO movies (title, release_timestamp) VALUES (?,?,0);"
+INERT_USER = "INSERT INTO users (username) VALUES (?);"
 DELETE_MOVIES = "DELETE FROM movies WHERE title = ?;"
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
@@ -39,9 +40,16 @@ def create_tables():
         connection.execute(CREATE_USERS_TABLE)
         connection.execute(CREATE_WATCHED_TABLE)
 
+
+def add_user(username):
+    with connection:
+        connection.execute(INERT_USER, (username))
+
+
 def add_movie(title, release_timestamp):
     with connection:
         connection.execute(INSERT_MOVIES, (title, release_timestamp))
+
 
 def get_movies(upcoming=False):
     with connection:
@@ -54,9 +62,11 @@ def get_movies(upcoming=False):
             cursor.execute(SELECT_ALL_MOVIES)
         return cursor.fetchall()
 
+
 def watch_movie(username, movie_id):
     with connection:
         connection.execute(INSERT_WATCHED_MOVIES, (username, movie_id))
+
 
 def get_watched_movies(username):
     with connection:
