@@ -29,12 +29,13 @@ def prompt_add_movie():
 # print upcoming list of movies
 def print_movies_list(heading, movies):
     print(f"|-------- {heading} Movies --------|")
-    for m in movies:
+    for _id, title, release_date in movies:
         # parse the timestamp into a datetime object, then converted into a string
-        movie_date = datetime.datetime.fromtimestamp(m[1])
+        movie_date = datetime.datetime.fromtimestamp(release_date)
         real_date = movie_date.strftime("%b %d %Y")
-        print(f"{m[0]} (on {real_date})")
+        print(f"{_id}: {title} (on {real_date})")
     print("------------------------------------\n")
+
 
 #printing the watched movie data
 def print_watched_movie_list(username, movies):
