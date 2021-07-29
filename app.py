@@ -7,7 +7,8 @@ movie_menu = """\nSelect one of the following option:
 3) View all movies.
 4) Watch a movie.
 5) View watched movies.
-6) Exit.
+6) Add user to system.
+7) Exit.
 
 Select option: """
 
@@ -48,11 +49,18 @@ def print_watched_movie_list(username, movies):
 
 # mark a movie as watched 
 def prompt_watched_movie():
-    username = input("Username: ")
-    movie_title = input("Enter movie title you watched: ")
-    database.watch_movie(username, movie_title)
+    username = input("Enter Username: ")
+    movie_id = input("Enter Movie ID: ")
+    database.watch_movie(username, movie_id)
 
-while (user_input := input(movie_menu)) != "6":
+
+def prompt_add_user():
+    username = input("Enter username: ")
+    database.add_user(username)
+
+
+
+while (user_input := input(movie_menu)) != "7":
     if user_input == "1":
         prompt_add_movie()
     elif user_input == "2":
@@ -67,5 +75,7 @@ while (user_input := input(movie_menu)) != "6":
         username = input("Username: ")
         movies = database.get_watched_movies(username)
         print_watched_movie_list(username, movies)
+    elif user_input == "6":
+        prompt_add_user()
     else:
         print("You've entered an invalid input, please try again!")
